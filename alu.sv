@@ -39,8 +39,6 @@ module ALU #(
          // Bitwise operations
          4'b0100: ALU_Result = a << 1;  // Logical shift left
          4'b0101: ALU_Result = a >> 1;  // Logical shift right
-         4'b0110: ALU_Result = {a[6:0], a[7]}; // Rotate left
-         4'b0111: ALU_Result = {a[0], a[7:1]};// Rotate right
          // Logical operations
          4'b1000: ALU_Result = a & b; // Logical AND
          4'b1001: ALU_Result = a | b; // Logical OR
