@@ -1,4 +1,4 @@
-`timescale 1ns/1ps
+`timescale 1ns/100ps
 `include "sl2.sv"
 
 module tb_Shift_Left_2;
@@ -16,7 +16,7 @@ module tb_Shift_Left_2;
         // Test case 1: Basic shift
         in = 32'b00000001; 
         #10;
-        $display("Input: %, Output: %h (Expected: %h)", in, out, 32'h0000000C);
+        $display("Input: %b, Output: %b", in, out);
         
         $finish;
     end
