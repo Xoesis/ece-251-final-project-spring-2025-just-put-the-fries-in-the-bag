@@ -1,5 +1,5 @@
 `timescale 1ns/100ps
-`include "sl2.sv"
+`include "Shift_Left_2.sv"
 
 module tb_Shift_Left_2;
     parameter WIDTH = 32;
@@ -11,7 +11,7 @@ module tb_Shift_Left_2;
     
     initial begin
         $dumpfile("shift.vcd");
-        $dumpvars(0, tb_sl2);
+        $dumpvars(0, tb_Shift_Left_2);
         
         // Test case 1: Basic shift
         in = 32'b00000001; 
