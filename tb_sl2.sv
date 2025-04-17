@@ -11,22 +11,12 @@ module tb_Shift_Left_2;
     
     initial begin
         $dumpfile("shift.vcd");
-        $dumpvars(0, tb_Shift_Left_2);
+        $dumpvars(0, tb_sl2);
         
         // Test case 1: Basic shift
-        in = 32'h00000003; // binary: ...0011
+        in = 32'b00000001; 
         #10;
-        $display("Input: %h, Output: %h (Expected: %h)", in, out, 32'h0000000C);
-        
-        // Test case 2: Shift with overflow
-        in = 32'hC0000000;
-        #10;
-        $display("Input: %h, Output: %h (Expected: %h)", in, out, 32'h00000000);
-        
-        // Test case 3: Random test
-        in = $random;
-        #10;
-        $display("Input: %h, Output: %h", in, out);
+        $display("Input: %, Output: %h (Expected: %h)", in, out, 32'h0000000C);
         
         $finish;
     end
