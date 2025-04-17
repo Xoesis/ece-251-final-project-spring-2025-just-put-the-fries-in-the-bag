@@ -6,9 +6,6 @@
 //
 // module: ALU
 // hdl: SystemVerilog
-//
-// author: Kenneth Chan <kenc0728@gmail.com>
-//
 ///////////////////////////////////////////////////////////////////////////////
 `timescale 1ns/100ps
 `include "ALU.sv"
