@@ -12,10 +12,10 @@
 
 module tb_ALU;
     // ---------------- DECLARATIONS OF DATA TYPES ----------------
-    reg [7:0] a; // Input operand A
-    reg [7:0] b; // Input operand B
+    reg [31:0] a; // Input operand A
+    reg [31:0] b; // Input operand B
     reg [3:0] operation; // Operation selection
-    wire [7:0] result;   // Output result
+    wire [31:0] result;   // Output result
     wire carry_out;      // Output carry_out
 
     // ---------------- INSTANTIATE THE ALU MODULE ----------------
@@ -60,5 +60,7 @@ module tb_ALU;
         operation = $random; // Randomize operation
     end
 endmodule
+
+
 
 
