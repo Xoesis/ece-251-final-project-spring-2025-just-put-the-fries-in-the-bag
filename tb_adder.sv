@@ -1,12 +1,3 @@
-///////////////////////////////////////////////////////////////////////////////
-//
-// Module: Testbench for Adder
-//
-// Testbench for Adder
-//
-// module: Adder
-// hdl: SystemVerilog
-///////////////////////////////////////////////////////////////////////////////
 `ifndef TB_ADDER
 `define TB_ADDER
 
@@ -15,26 +6,45 @@
 
 module tb_adder;
     parameter WIDTH = 32;
-    logic [WIDTH-1:0] a, b, y;
-
-    initial begin : dump_variables
-        $dumpfile("tb_ADDER.vcd"); // for Makefile, make dump file same as module name
-        $dumpvars(0, dut);
-    end
-
-    reg [WIDTH-1:0] A;    // n-bit input A
-    reg [WIDTH-1:0] B;    // n-bit input B
-    wire [WIDTH-1:0] Sum; // n-bit Sum output
-
-    // Instantiate the n-bit full adder with the parameterized bit length
-    FULL_ADDER #(n) dut (
+    
+    // Test signals
+    logic [WIDTH-1:0] A, B;
+    logic [WIDTH-1:0] Sum;
+    
+    // Instantiate the adder
+    ADDER #(.WIDTH(WIDTH)) dut (
         .A(A),
         .B(B),
-        .Sum(Sum),
+        .Sum(Sum)
     );
-       initial begin
-        a <= #n'hFFFFFFFF;
-        b <= #n'hFFFFFFFF;
+    
+    // Initialize waveform dumping
+    initial begin
+        $dumpfile("tb_adder.vcd");
+        $dumpvars(0, tb_adder);
+    end
+    
+    // Test cases
+    initial begin
+        // Test case 1: Basic addition
+        A = 32'h00000001;
+        B = 32'h00000001;
+        #10;
+        $display("Test 1: %h + %h = %h (Expected: %h)", A, B, Sum, 32'h00000002);
+        
+        // Test case 2: Overflow case
+        A = 32'hFFFFFFFF;
+        B = 32'h00000001;
+        #10;
+        $display("Test 2: %h + %h = %h (Expected: %h)", A, B, Sum, 32'h00000000);
+        
+        $finish;
+    end
+    
+    // Monitor changes
+    initial begin
+        $monitor("At time %t: A = %h, B = %h, Sum = %h", 
+                 $time, A, B, Sum);
     end
 
 endmodule
