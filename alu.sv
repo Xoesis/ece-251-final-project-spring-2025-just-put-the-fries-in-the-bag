@@ -49,7 +49,7 @@ module ALU #(
          4'b1100: ALU_Result = ~(a & b);// Logical NAND
          4'b1101: ALU_Result = ~(a ^ b); // Logical XNOR
          // Comparison operations
-         default: ALU_Result = 8'bxxxx_xxxx; // don't  care(default case)
+         default: result = {WIDTH{1'b0}}; // Default case to 0
         endcase
     end
 endmodule 
