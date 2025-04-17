@@ -10,7 +10,6 @@
 //////////////////////////////////////////////////////////////////////////////
 `ifndef ALU
 `define ALU
-// DO NOT FORGET TO RENAME MODULE_NAME to match your module_name
 
 module ALU #(
     parameter WIDTH = 32
@@ -56,5 +55,3 @@ module ALU #(
 endmodule 
 
 `endif 
-
-//Design and implement in SystemVerilog a simplified memory layout from and to which you can load and store data, using byte addressing.
