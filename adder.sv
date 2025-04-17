@@ -23,3 +23,4 @@ module ADDER #(
   assign Sum = A + B; // Perform addition 
 
 endmodule
+`endif
