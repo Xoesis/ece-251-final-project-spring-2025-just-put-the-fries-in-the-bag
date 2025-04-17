@@ -14,22 +14,28 @@
 `include "adder.sv"
 
 module tb_adder;
-    parameter n = 32;
-    logic [(n-1):0] a, b, y;
+    parameter WIDTH = 32;
+    logic [WIDTH-1:0] a, b, y;
 
-   initial begin
-        $dumpfile("adder.vcd");
-        $dumpvars(0, uut);
-        $monitor("a = 0x%0h b = 0x%0h y = 0x%0h", a, b, y);
+    initial begin : dump_variables
+        $dumpfile("tb_ADDER.vcd"); // for Makefile, make dump file same as module name
+        $dumpvars(0, dut);
     end
 
-    initial begin
+    reg [WIDTH-1:0] A;    // n-bit input A
+    reg [WIDTH-1:0] B;    // n-bit input B
+    wire [WIDTH-1:0] Sum; // n-bit Sum output
+
+    // Instantiate the n-bit full adder with the parameterized bit length
+    FULL_ADDER #(n) dut (
+        .A(A),
+        .B(B),
+        .Sum(Sum),
+    );
+       initial begin
         a <= #n'hFFFFFFFF;
         b <= #n'hFFFFFFFF;
     end
 
-    adder uut(
-        .A(a), .B(b), .Y(y)
-    );
 endmodule
 `endif // TB_ADDER
