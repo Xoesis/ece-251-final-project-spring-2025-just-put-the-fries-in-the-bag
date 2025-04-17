@@ -12,10 +12,11 @@
 
 module tb_ALU;
     // ---------------- DECLARATIONS OF DATA TYPES ----------------
-    reg [31:0] a; // Input operand A
-    reg [31:0] b; // Input operand B
+    parameter WIDTH = 32;
+    reg [WIDTH-1:0] a; // Input operand A
+    reg [WIDTH-1:0] b; // Input operand B
     reg [3:0] operation; // Operation selection
-    wire [31:0] result;   // Output result
+    wire [WIDTH-1:0] result;   // Output result
     wire carry_out;      // Output carry_out
 
     // ---------------- INSTANTIATE THE ALU MODULE ----------------
@@ -29,8 +30,8 @@ module tb_ALU;
 
     // ---------------- INITIALIZE TEST BENCH ----------------
     initial begin : initialize_variables
-        a = 8'b00110011; // Initialize operand A
-        b = 8'b11001100; // Initialize operand B
+        a = 32'b00110011; // Initialize operand A
+        b = 32'b11001100; // Initialize operand B
         operation = 4'b0000;     // Initialize operation (addition)
     end
 
