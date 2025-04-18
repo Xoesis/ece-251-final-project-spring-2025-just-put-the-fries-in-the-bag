@@ -18,7 +18,6 @@ module tb_ALU;
     reg  [3:0]   alucontrol;
     wire [WIDTH-1:0] result;
 
-    // Instantiate ALU (assuming ALU is updated to remove `zero`)
     ALU #(WIDTH) dut (
         .a(a),
         .b(b),
@@ -89,7 +88,7 @@ module tb_ALU;
         #1 $display("SRA\n  a        = %b\n  b        = %b\n  result   = %b\n", a, b, result);
 
         // LUI
-        b = 32'b00000000000000000001001000110100; // 0x00001234
+        b = 32'b00000000000000000001001000110100; 
         alucontrol = 4'b1010;
         #1 $display("LUI\n  a        = %b\n  b        = %b\n  result   = %b\n", a, b, result);
 
