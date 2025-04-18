@@ -14,8 +14,8 @@
 `timescale 1ns/100ps
 
 module aludec (
-    input  logic [5:0] funct,    // Function field from instruction
-    input  logic [1:0] aluop,    // ALU opcode from main decoder
+    input  logic [5:0] funct,    
+    input  logic [1:0] aluop,    // ALU opcode
     output logic [3:0] alucontrol // ALU control signals
 );
     // ALU control encoding
@@ -57,4 +57,4 @@ module aludec (
     end
 endmodule
 
-`endif // ALUDEC
+`endif 
