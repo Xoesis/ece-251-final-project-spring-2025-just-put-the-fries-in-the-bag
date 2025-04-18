@@ -7,9 +7,6 @@
 // module: ALU decoder
 // hdl: SystemVerilog
 // modeling: Behavior Level Modeling
-//
-// author: Kenneth Chan <kenc0728@gmail.com>
-//
 ///////////////////////////////////////////////////////////////////////////////
 `ifndef ALUDEC
 `define ALUDEC
