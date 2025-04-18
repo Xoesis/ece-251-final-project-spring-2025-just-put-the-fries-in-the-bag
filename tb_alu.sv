@@ -11,54 +11,104 @@
 `include "ALU.sv"
 
 module tb_ALU;
-    // ---------------- DECLARATIONS OF DATA TYPES ----------------
-    parameter WIDTH = 32;
-    reg [WIDTH-1:0] a; // Input operand A
-    reg [WIDTH-1:0] b; // Input operand B
-    reg [3:0] operation; // Operation selection
-    wire [WIDTH-1:0] result;   // Output result
-    wire carry_out;      // Output carry_out
+`timescale 1ns/1ps
 
-    // ---------------- INSTANTIATE THE ALU MODULE ----------------
-    ALU dut (
-        .result(result),
-        .carry_out(carry_out),
+
+    parameter N = 32;
+
+    reg  [N-1:0] a, b;
+    reg  [3:0]   alucontrol;
+    wire [N-1:0] result;
+    wire         zero;
+
+    // Instantiate ALU
+    alu #(N) dut (
         .a(a),
         .b(b),
-        .operation(operation)
+        .alucontrol(alucontrol),
+        .result(result),
+        .zero(zero)
     );
 
-    // ---------------- INITIALIZE TEST BENCH ----------------
-    initial begin : initialize_variables
-        a = 32'b00110011; // Initialize operand A
-        b = 32'b11001100; // Initialize operand B
-        operation = 4'b0000;     // Initialize operation (addition)
-    end
+    // Task to display binary output
+    task show;
+        input [255:0] name;
+        begin
+            #1 $display("%s\n  a        = %b\n  b        = %b\n  result   = %b\n  zero     = %b\n", 
+                        name, a, b, result, zero);
+        end
+    endtask
 
-    // ---------------- DUMP VARIABLES FOR WAVEFORM VIEWING ----------------
-    initial begin : dump_variables
-        $dumpfile("tb_ALU.vcd"); // Create a VCD file for waveform viewing
-        $dumpvars(0, tb_ALU);    // Dump all variables in the testbench
-    end
-
-    // ---------------- MONITOR OUTPUTS ----------------
     initial begin
-        $monitor("Time: %0t | operand_a=%b | operand_b=%b | operation=%b | result=%b | carry_out=%b",
-                 $time, a, b, operation, result, carry_out);
-    end
+        $display("Starting ALU Testbench (Binary Output)...\n");
 
-    // ---------------- APPLY RANDOM STIMULUS ----------------
-    initial begin : apply_stimulus
-        #1000; // Run the simulation for 1000 time units
-        $finish; // End the simulation
-    end
+        // ADD
+        a = 32'b00000000000000000000000000001010;
+        b = 32'b00000000000000000000000000000101;
+        alucontrol = 4'b0000;
+        show("ADD");
 
-    // Generate random inputs every 10 time units
-    always begin
-        #10; // Wait for 10 time units
-        a = $random; // Randomize operand A
-        b = $random; // Randomize operand B
-        operation = $random; // Randomize operation
+        // SUB
+        a = 32'b00000000000000000000000000001010;
+        b = 32'b00000000000000000000000000001010;
+        alucontrol = 4'b0001;
+        show("SUB");
+
+        // AND
+        a = 32'b11111111000000001111111100000000;
+        b = 32'b00001111000011110000111100001111;
+        alucontrol = 4'b0010;
+        show("AND");
+
+        // OR
+        a = 32'b00000000111111110000000011111111;
+        b = 32'b00001111000011110000111100001111;
+        alucontrol = 4'b0011;
+        show("OR");
+
+        // XOR
+        a = 32'b10101010101010100101010101010101;
+        b = 32'b01010101010101011010101010101010;
+        alucontrol = 4'b0100;
+        show("XOR");
+
+        // NOR
+        a = 32'b11111111111111111111111111111111;
+        b = 32'b00000000000000000000000000000000;
+        alucontrol = 4'b0101;
+        show("NOR");
+
+        // SLT
+        a = -32'sd5;
+        b = 32'sd3;
+        alucontrol = 4'b0110;
+        show("SLT");
+
+        // SLL
+        a = 32'd3;
+        b = 32'b00000000000000000000000000000001;
+        alucontrol = 4'b0111;
+        show("SLL");
+
+        // SRL
+        a = 32'd3;
+        b = 32'b00000000000000000000000000001000;
+        alucontrol = 4'b1000;
+        show("SRL");
+
+        // SRA
+        a = 32'd3;
+        b = -32'sd32;
+        alucontrol = 4'b1001;
+        show("SRA");
+
+        // LUI
+        b = 32'b00000000000000000001001000110100; // 0x00001234
+        alucontrol = 4'b1010;
+        show("LUI");
+
+        $display("ALU Testbench complete.");
+        $finish;
     end
 endmodule
 
