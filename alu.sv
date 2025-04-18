@@ -10,46 +10,34 @@
 //////////////////////////////////////////////////////////////////////////////
 `ifndef ALU
 `define ALU
-
+`timescale 1ns/100ps
 module ALU #(
     parameter WIDTH = 32
-)(
-    input [WIDTH-1:0] a,
-    input [WIDTH-1:0] b,
-    input [3:0] operation,
-    output [WIDTH-1:0] result,
-    output carry_out
-   
+) (
+    input  wire [WIDTH-1:0] a,          
+    input  wire [WIDTH-1:0] b,          
+    input  wire [3:0] alucontrol,  
+    output reg  [WIDTH-1:0] result,      
+    output wire zero        
 );
 
-    reg [WIDTH-1:0] ALU_Result;
-    wire [WIDTH:0] extended_result;
-    assign result = ALU_Result;    
-    assign extended_result = {1'b0, a} + {1'b0, b};
-    assign carry_out = extended_result[8];  
-
-    always @(*)
-    begin
-        case (operation)
-         // Arithmetic operations
-         4'b0000: ALU_Result = a + b;    // Addition
-         4'b0001: ALU_Result = a - b;    // Subtraction
-         4'b0010: ALU_Result = a * b;    // Multiplication
-         4'b0011: ALU_Result = a / b;    // Division
-         // Bitwise operations
-         4'b0100: ALU_Result = a << 1;  // Logical shift left
-         4'b0101: ALU_Result = a >> 1;  // Logical shift right
-         // Logical operations
-         4'b1000: ALU_Result = a & b; // Logical AND
-         4'b1001: ALU_Result = a | b; // Logical OR
-         4'b1010: ALU_Result = a ^ b; // Logical XOR
-         4'b1011: ALU_Result = ~(a | b);// Logical NOR
-         4'b1100: ALU_Result = ~(a & b);// Logical NAND
-         4'b1101: ALU_Result = ~(a ^ b); // Logical XNOR
-         // Comparison operations
-         default: result = {WIDTH{1'b0}}; // Default case to 0
+    always @(*) begin
+        case (alucontrol)
+            4'b0000: result = a + b;                                    // ADD
+            4'b0001: result = a - b;                                    // SUB
+            4'b0010: result = a & b;                                    // AND
+            4'b0011: result = a | b;                                    // OR
+            4'b0100: result = a ^ b;                                    // XOR
+            4'b0101: result = ~(a | b);                                 // NOR
+            4'b0110: result = ($signed(a) < $signed(b)) ? 1 : 0;        // SLT (signed)
+            4'b0111: result = b << a[$clog2(N)-1:0];                    // SLL
+            4'b1000: result = b >> a[$clog2(N)-1:0];                    // SRL
+            4'b1001: result = $signed(b) >>> a[$clog2(N)-1:0];          // SRA
+            4'b1010: result = {b[N/2-1:0], {N/2{1'b0}}};                // LUI
+            default: result = {N{1'b0}};                                // Default to 0
         endcase
     end
-endmodule 
 
-`endif 
+    assign zero = (result == {N{1'b0}});
+
+endmodule
