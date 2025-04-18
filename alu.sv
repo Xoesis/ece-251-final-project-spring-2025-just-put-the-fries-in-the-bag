@@ -19,7 +19,7 @@ module alu #(parameter WIDTH = 32) (
     output logic [WIDTH-1:0] result
 );
 
-    always_comb begin
+    always @(a,b,alucontrol) begin
         case (alucontrol)
             4'b0000: result = a + b;               // ADD
             4'b0001: result = a - b;               // SUB
