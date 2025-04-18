@@ -13,13 +13,13 @@
 
 module tb_ALU;
 
-    parameter N = 32;
+    parameter WIDTH = 32;
 
-    reg  [N-1:0] a, b;
+    reg  [WIDTH-1:0] a, b;
     reg  [3:0]   alucontrol;
-    wire [N-1:0] result;
+    wire [WIDTH-1:0] result;
 
-    alu #(N) dut (
+    alu #(WIDTH) dut (
         .a(a),
         .b(b),
         .alucontrol(alucontrol),
