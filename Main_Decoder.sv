@@ -17,11 +17,7 @@
 
 `timescale 1ns/100ps
 
-module MAINDEC
-    #(parameter n = 32)(
-    //
-    // ---------------- PORT DEFINITIONS ----------------
-    //
+module MAINDEC (
     input  logic [5:0] op,
     output logic       memtoreg, memwrite,
     output logic       branch, alusrc,
@@ -29,27 +25,53 @@ module MAINDEC
     output logic       jump,
     output logic [1:0] aluop
 );
-    //
-    // ---------------- MODULE DESIGN IMPLEMENTATION ----------------
-    //
-    logic [8:0] controls; // 9-bit control vector
 
-    // controls has 9 logical signals
-    assign {regwrite, regdst, alusrc, branch, memwrite,
-            memtoreg, jump, aluop} = controls;
+    always_comb begin
+        // Default values
+        memtoreg = 0;
+        memwrite = 0;
+        branch   = 0;
+        alusrc   = 0;
+        regdst   = 0;
+        regwrite = 0;
+        jump     = 0;
+        aluop    = 2'b00;
 
-    always @* begin
-        case(op)
-            6'b000000: controls <= 9'b110000010; // RTYPE
-            6'b100011: controls <= 9'b101001000; // LW
-            6'b101011: controls <= 9'b001010000; // SW
-            6'b000100: controls <= 9'b000100001; // BEQ
-            6'b001000: controls <= 9'b101000000; // ADDI
-            6'b000010: controls <= 9'b000000100; // J
-            default:   controls <= 9'bxxxxxxxxx; // illegal operation
+        case (op)
+            6'b000000: begin  // R-type
+                regdst   = 1;
+                regwrite = 1;
+                aluop    = 2'b11; // ✅ FIX: use funct field decoding
+            end
+            6'b100011: begin  // lw
+                memtoreg = 1;
+                memwrite = 0;
+                alusrc   = 1;
+                regdst   = 0;
+                regwrite = 1;
+                aluop    = 2'b00; // ADD
+            end
+            6'b101011: begin  // sw
+                memtoreg = 0;
+                memwrite = 1;
+                alusrc   = 1;
+                regdst   = 0;
+                regwrite = 0;
+                aluop    = 2'b00; // ADD
+            end
+            6'b000100: begin  // beq
+                branch   = 1;
+                aluop    = 2'b01; // SUB
+            end
+            6'b000010: begin  // jump
+                jump = 1;
+            end
+            default: begin
+                // Do nothing or handle other instructions
+            end
         endcase
     end
 
 endmodule
 
-`endif // MAINDEC
+`endif
