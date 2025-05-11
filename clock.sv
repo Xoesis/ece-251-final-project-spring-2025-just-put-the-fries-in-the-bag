@@ -7,6 +7,9 @@
 // module: CLOCK
 // hdl: SystemVerilog
 // modeling: Behavior Level Modeling
+//
+// author: Kenneth Chan <kenc0728@gmail.com>
+//
 ///////////////////////////////////////////////////////////////////////////////
 `ifndef CLOCK
 `define CLOCK
