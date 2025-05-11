@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////
 // The Cooper Union
-// Kenneth Chan
+// Kenneth Chan Spring 2025
 // 
 //     Module Name: tb_Main_Decoder
 //     Description: Test bench
