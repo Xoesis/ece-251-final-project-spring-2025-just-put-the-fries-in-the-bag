@@ -6,6 +6,9 @@
 //
 // module: Shift Left 2
 // hdl: SystemVerilog
+//
+// author: Kenneth Chan <kenc0728@gmail.com>
+//
 ///////////////////////////////////////////////////////////////////////////////
 `timescale 1ns/100ps
 `include "Shift_Left_2.sv"
