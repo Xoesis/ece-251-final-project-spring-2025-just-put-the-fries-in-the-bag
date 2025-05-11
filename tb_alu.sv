@@ -8,49 +8,73 @@
 // module: ALU
 // hdl: SystemVerilog
 ///////////////////////////////////////////////////////////////////////////////
+`ifndef TB_ADDER
+`define TB_ADDER
+
 `timescale 1ns/100ps
-`include "ALU.sv"
+`include "adder.sv"
 
-module tb_ALU;
-
+module tb_adder;
     parameter WIDTH = 32;
-
-    reg  [WIDTH-1:0] a, b;
-    reg  [3:0]   alucontrol;
-    wire [WIDTH-1:0] result;
-
-    alu #(WIDTH) dut (
-        .a(a),
-        .b(b),
-        .alucontrol(alucontrol),
-        .result(result)
+    
+    // Test signals
+    logic [WIDTH-1:0] A, B;
+    logic [WIDTH-1:0] Sum;
+    
+    // Instantiate the adder
+    adder #(.WIDTH(WIDTH)) dut (
+        .A(A),
+        .B(B),
+        .Sum(Sum)
     );
-
+    
+    // Initialize waveform dumping
     initial begin
-        // MUL
-        a = 32'd6; b = 32'd7; alucontrol = 4'b1011;
-        #1 $display("MUL: a = %b, b = %b, result = %b", a, b, result);
+        $dumpfile("tb_adder.vcd");
+        $dumpvars(0, tb_adder);
+    end
+    
+    // Monitor changes
+    initial begin
+        $monitor("At time %t: A = %h, B = %h, Sum = %h", 
+                 $time, A, B, Sum);
+    end
 
-        // DIV
-        a = 32'd21; b = 32'd7; alucontrol = 4'b1100;
-        #1 $display("DIV: a = %b, b = %b, result = %b", a, b, result);
+    // Task to check expected result
+    task check_result(input [WIDTH-1:0] expected);
+        if (Sum === expected) begin
+            $display("PASS: Sum = %h (expected %h)", Sum, expected);
+        end else begin
+            $display("FAIL: Sum = %h (expected %h)", Sum, expected);
+        end
+    endtask
 
-        // ADD
-        a = 32'd3; b = 32'd2; alucontrol = 4'b0000;
-        #1 $display("ADD: a = %b, b = %b, result = %b", a, b, result);
+    // Test cases
+    initial begin
+        // Test case 1: Basic addition
+        A = 32'h00000001;
+        B = 32'h00000001;
+        #10;
+        check_result(32'h00000002);
 
-        // AND
-        a = 32'hF0F0F0F0; b = 32'h0F0F0F0F; alucontrol = 4'b0010;
-        #1 $display("AND: a = %b, b = %b, result = %b", a, b, result);
-        
+        // Test case 2: Overflow case (wrap-around)
+        A = 32'hFFFFFFFF;
+        B = 32'h00000001;
+        #10;
+        check_result(32'h00000000);
+
+        // Test case 3: Random addition
+        A = 32'h12345678;
+        B = 32'h87654321;
+        #10;
+        check_result(32'h99999999);
+
         $finish;
     end
 
 endmodule
+`endif // TB_ADDER
 
-
-
-endmodule
 
 
 
