@@ -1,8 +1,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 // The Cooper Union
 // ECE 251 Spring 2023
-// Code inspired by Prof. Rob Marano 
-// Kenneth Chan 
+// Kenneth Chan
 // 
 // 
 //     Module Name: tb_IMEM
