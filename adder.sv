@@ -11,7 +11,7 @@
 `ifndef ADDER
 `define ADDER
 
-module ADDER #(
+module adder #(
   parameter WIDTH = 32 // Default width of 32 bits
 ) (
   input logic [WIDTH-1:0] A, // Input A
