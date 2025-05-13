@@ -21,15 +21,20 @@ module alu (
 );
     logic [31:0] result;
     logic carry_out;
+    logic [63:0] HILO;
     
-    always_comb begin
-        case (alucontrol)
-            3'b000: result = a & b;  // AND
-            3'b001: result = a | b;  // OR
+    always @(*) begin
+	HILO = a * b;
+	case (alucontrol)
+            3'b000: result <= a & b;  // AND
+            3'b001: result <= a | b;  // OR
+	    3'b011: result <= ~(a|b); // NOR
             3'b010: {carry_out, result} = {1'b0,a} + {1'b0,b};  // ADD
-            3'b110: result = a - b;  // SUB
-            3'b111: result = ($signed(a) < $signed(b)) ? 32'd1 : 32'd0;  // SLT
-            default: result = 32'd0;
+            3'b100: result <= a - b;  // SUB
+	    3'b101: result <= HILO[63:32]; // MFHI
+	    3'b110: result <= HILO[31:0]; // MFLO
+            3'b111: result <= ($signed(a) < $signed(b)) ? 32'd1 : 32'd0;  // SLT
+            default: result <= 32'd0;
         endcase
     end
     
