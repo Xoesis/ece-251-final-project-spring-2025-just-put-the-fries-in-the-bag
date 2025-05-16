@@ -21,7 +21,7 @@ Adds inputs and returns the output
 ## ALU <br/>
 Performs several operations between inputs such as add, subtract, multiply, divide, or, and 
 ## ALU Decoder <br/>
-Decodes instructions to determine what ALU operation to perform
+Decodes instructions to determine what ALU operation to perform, for R-type, increments by PC + 4, for J-type, it would jump in relative to PC (no exact value), for branch, it would theoretically jump to the label (but no labels in MIPS coding) 
 ## Clock <br/>
 Changes from high to low every "picosecond" 
 ## Computer <br/>
