@@ -34,6 +34,12 @@ If the first bit is 1, then all 1's will be placed in front of the first bit unt
 ## Shift Left Logical 2 bits <br/>
 Places two 0's behind the last bit, effectively multiplying the value by 4
 
+# Steps to compile and simulate CPU <br/>
+1. Go to the computer directory
+2. Enter this command: make COMPONENT=computer
+3. Enter this command: make simulate COMPONENT=computer
+4. If you have QTspim, enter this command: make display COMPONENT=computer
+
 # Link to video: <br/>
 
 
