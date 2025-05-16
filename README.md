@@ -6,6 +6,14 @@ The CPU reads instructions from an input file, computes and exectues them <br/>
 Designed CPU based on "Computer Organization and Design MIPS Edition" 6th edition by David A. Patterson and John L. Hennessy
 ![image](https://github.com/user-attachments/assets/57fa6306-8808-46ae-b08a-9d2d53a3b9cb)
 
+# ISA 
+| ISA specs | Implementation |
+| --- | --- |
+| Address Bus Size | 32 bits |
+| Instruction Length  | 32 bits |
+| PC Increment | 4 bytes |
+| Full Word Size | 32 bits |
+
 # CPU design <br/> 
 We implemented the CPU using the following components: <br/>
 ## Adder <br/>
