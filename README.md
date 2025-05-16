@@ -38,9 +38,10 @@ Places two 0's behind the last bit, effectively multiplying the value by 4
 
 # Steps to compile and simulate CPU <br/>
 1. Go to the computer directory
-2. Enter this command: make COMPONENT=computer
-3. Enter this command: make simulate COMPONENT=computer
-4. If you have QTspim, enter this command: make display COMPONENT=computer
+2. Make a file called program_exe (hex code) and a program.asm (MIPS code)
+3. Enter this command: make COMPONENT=computer
+4. Enter this command: make simulate COMPONENT=computer
+5. If you have QTspim, enter this command: make display COMPONENT=computer
 
 # Link to video: <br/>
 
