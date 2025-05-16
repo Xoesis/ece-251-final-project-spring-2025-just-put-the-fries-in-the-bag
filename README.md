@@ -1,20 +1,20 @@
 # ece-251-final-project-spring-2025-just-put-the-fries-in-the-bag
 
 Implemented a single cycle CPU with the following modules: <br/>
-Adder 
-ALU 
-ALU Decoder
-Clock
-Computer
-Controller
-CPU 
-Datapath
-D Flip-Flop
-DMEM 
-IMEM 
-Main Decoder
-2:1 MUX 
-Register File 
-Sign Extender 
-Shift Left Logical 2 bits
+Adder <br/>
+ALU <br/>
+ALU Decoder <br/>
+Clock <br/>
+Computer <br/>
+Controller <br/>
+CPU <br/>
+Datapath <br/>
+D Flip-Flop <br/>
+DMEM <br/>
+IMEM <br/>
+Main Decoder <br/>
+2:1 MUX <br/>
+Register File <br/>
+Sign Extender <br/>
+Shift Left Logical 2 bits <br/>
 
