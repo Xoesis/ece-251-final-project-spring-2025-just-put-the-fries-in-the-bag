@@ -7,7 +7,7 @@ Designed CPU based on "Computer Organization and Design MIPS Edition" 6th editio
 ![image](https://github.com/user-attachments/assets/57fa6306-8808-46ae-b08a-9d2d53a3b9cb)
 
 # ISA 
-| ISA specs | Implementation |
+| ISA Specs | Implementation |
 | --- | --- |
 | Address Bus Size | 32 bits |
 | Instruction Length  | 32 bits |
