@@ -9,99 +9,78 @@
 ///////////////////////////////////////////////////////////////////////////////
 `timescale 1ns/100ps
 `include "alu.sv"
+`timescale 1ns/1ps
 
-module tb_alu;
+module alu_tb;
 
-    // Inputs
-    reg [31:0] a, b;
-    reg [2:0] alucontrol;
+  parameter n = 32;
 
-    // Outputs
-    wire [31:0] aluout;
-    wire zero;
-    wire overflow;
+  logic clk;
+  logic [n-1:0] a, b;
+  logic [2:0] alucontrol;
+  logic [n-1:0] result;
+  logic zero;
 
-    // Instantiate the ALU
-    alu uut (
-        .a(a),
-        .b(b),
-        .alucontrol(alucontrol),
-        .aluout(aluout),
-        .zero(zero),
-        .overflow(overflow)
-    );
+  // Instantiate the ALU
+  alu #(n) dut (
+    .clk(clk),
+    .a(a),
+    .b(b),
+    .alucontrol(alucontrol),
+    .result(result),
+    .zero(zero)
+  );
 
-    // Test vector
-    initial begin
-        // Test case 1: AND operation (a & b)
-        a = 32'b10101010101010101010101010101010;
-        b = 32'b11001100110011001100110011001100;
-        alucontrol = 3'b000; // AND
-        #10;
-        $display("AND operation: a = %b, b = %b, result = %b, zero = %b, overflow = %b", a, b, aluout, zero, overflow);
+  // Clock generator
+  initial clk = 0;
+  always #5 clk = ~clk;
 
-        // Test case 2: OR operation (a | b)
-        alucontrol = 3'b001; // OR
-        #10;
-        $display("OR operation: a = %b, b = %b, result = %b, zero = %b, overflow = %b", a, b, aluout, zero, overflow);
+  // Stimulus
+  initial begin
+    $display("Time\tclk\ta\tb\tctrl\tresult\tzero");
+    $monitor("%0dns\t%b\t%h\t%h\t%03b\t%h\t%b", $time, clk, a, b, alucontrol, result, zero);
 
-        // Test case 3: ADD operation (a + b)
-        a = 32'd2147483647; // maximum positive value for 32-bit signed integer
-        b = 32'd1;
-        alucontrol = 3'b010; // ADD
-        #10;
-        $display("ADD operation: a = %d, b = %d, result = %d, zero = %b, overflow = %b", a, b, aluout, zero, overflow);
+    a = 32'h0000000A; // 10
+    b = 32'h00000005; // 5
 
-        // Test case 4: SUB operation (a - b)
-        a = 32'd10;
-        b = 32'd5;
-        alucontrol = 3'b110; // SUB
-        #10;
-        $display("SUB operation: a = %d, b = %d, result = %d, zero = %b, overflow = %b", a, b, aluout, zero, overflow);
+    // AND
+    alucontrol = 3'b000;
+    #10;
 
-        // Test case 5: SLT operation (a < b)
-        a = 32'd5;
-        b = 32'd10;
-        alucontrol = 3'b111; // SLT (Set Less Than)
-        #10;
-        $display("SLT operation: a = %d, b = %d, result = %d, zero = %b, overflow = %b", a, b, aluout, zero, overflow);
+    // OR
+    alucontrol = 3'b001;
+    #10;
 
-        // Test case 6: Overflow on ADD operation (a + b)
-        a = 32'd2147483647; // max positive value
-        b = 32'd2147483647; // another large value
-        alucontrol = 3'b010; // ADD
-        #10;
-        $display("Overflow ADD operation: a = %d, b = %d, result = %d, zero = %b, overflow = %b", a, b, aluout, zero, overflow);
+    // ADD
+    alucontrol = 3'b010;
+    #10;
 
-        // Test case 7: Zero detection
-        a = 32'd0;
-        b = 32'd0;
-        alucontrol = 3'b010; // ADD
-        #10;
-        $display("Zero detection: a = %d, b = %d, result = %d, zero = %b, overflow = %b", a, b, aluout, zero, overflow);
+    // SLT (signed)
+    alucontrol = 3'b111;
+    #10;
 
-        // Test case 8: SLT with equal values (should be 0)
-        a = 32'd5;
-        b = 32'd5;
-        alucontrol = 3'b111; // SLT
-        #10;
-        $display("SLT with equal values: a = %d, b = %d, result = %d, zero = %b, overflow = %b", a, b, aluout, zero, overflow);
+    // MUL (will latch on negedge)
+    alucontrol = 3'b011;
+    #10;
 
-        // Test case 9: Edge case for SUB with result = 0
-        a = 32'd5;
-        b = 32'd5;
-        alucontrol = 3'b110; // SUB
-        #10;
-        $display("Edge case SUB result = 0: a = %d, b = %d, result = %d, zero = %b, overflow = %b", a, b, aluout, zero, overflow);
+    // Wait for falling edge to store mult result
+    #10;
+    alucontrol = 3'b100; // lo
+    #10;
+    alucontrol = 3'b101; // hi
+    #10;
 
-        // Test case 10: Negative result in SUB
-        a = 32'd5;
-        b = 32'd10;
-        alucontrol = 3'b110; // SUB
-        #10;
-        $display("Negative result in SUB: a = %d, b = %d, result = %d, zero = %b, overflow = %b", a, b, aluout, zero, overflow);
+    // DIV (will latch on negedge)
+    alucontrol = 3'b101;
+    #10;
 
-        $finish;
-    end
+    // Wait for falling edge to store div result
+    #10;
+    alucontrol = 3'b100; // quotient
+    #10;
+    alucontrol = 3'b101; // remainder
+    #10;
 
+    $finish;
+  end
 endmodule
