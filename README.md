@@ -7,6 +7,7 @@ Designed CPU based on "Computer Organization and Design MIPS edition 6th edition
 ![image](https://github.com/user-attachments/assets/57fa6306-8808-46ae-b08a-9d2d53a3b9cb)
 
 # CPU design <br/> 
+We implemented the CPU using these components: <br/>
 ## Adder <br/>
 Adds inputs and returns the output 
 ## ALU <br/>
