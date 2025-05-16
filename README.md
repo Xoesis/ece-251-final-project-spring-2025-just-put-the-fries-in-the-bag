@@ -6,7 +6,7 @@ The CPU reads instructions from an input file, computes and exectues them <br/>
 Designed CPU based on "Computer Organization and Design MIPS edition 6th edition by David A. Patterson and John L. Hennessy
 ![image](https://github.com/user-attachments/assets/57fa6306-8808-46ae-b08a-9d2d53a3b9cb)
 
-The following are modules in the CPU: <br/> 
+# CPU design <br/> 
 ## Adder <br/>
 Adds inputs and returns the output 
 ## ALU <br/>
