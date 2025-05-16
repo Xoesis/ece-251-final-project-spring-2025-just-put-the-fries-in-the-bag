@@ -58,8 +58,6 @@ Places two 0's behind the last bit, effectively multiplying the value by 4
 5. If you have QTspim, enter this command: make display COMPONENT=computer
 
 
-
-
 # Link to video: <br/>
-
+https://youtu.be/a7i6yP6bvCA
 
