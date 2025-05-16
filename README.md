@@ -3,7 +3,7 @@ Implemented a 32-Bit Mips based, single cycle CPU <br/>
 The CPU reads instructions from an input file, computes and exectues them <br/>
 
 # CPU Diagram 
-Designed CPU based on "Computer Organization and Design MIPS edition 6th edition by David A. Patterson and John L. Hennessy
+Designed CPU based on "Computer Organization and Design MIPS Edition" 6th edition by David A. Patterson and John L. Hennessy
 ![image](https://github.com/user-attachments/assets/57fa6306-8808-46ae-b08a-9d2d53a3b9cb)
 
 # CPU design <br/> 
