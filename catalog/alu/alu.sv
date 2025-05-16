@@ -31,10 +31,10 @@ module alu #(parameter n = 32)(
 			3'b101: result = hilo[2*n-1:n];
 			3'b110: result = sumSlt;
 			3'b111: begin
-					if (a[31] != b[31])
-						result = alu[31 != b[31] ? 1 : 0;
+					if (a[31] != b[31]) 
+						result = (a[31] > b[31]) ? 1'b1 : 1'b0;
 					else
-						result = a < b ? 1 : 0;
+						result = (a < b) ? 1'b1 : 1'b0;
 				end
 		endcase
 	end

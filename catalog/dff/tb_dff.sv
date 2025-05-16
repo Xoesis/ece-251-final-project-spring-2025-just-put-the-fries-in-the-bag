@@ -1,82 +1,44 @@
-///////////////////////////////////////////////////////////////////////////////
-//
-// tb_dff.sv
-//
-// module: tb_dff
-// hdl: Verilog
-//
-// author: Berry Xu <berry.xu@cooper.edu>
-//
-///////////////////////////////////////////////////////////////////////////////
+`ifndef TB_DFF
+`define TB_DFF
 
 `timescale 1ns/1ps
-// ensure you note the scale (ns) below in $monitor
-
-`include "./dff.sv"
+`include "dff.sv"
+`include "../clock/clock.sv"
 
 module tb_dff;
-    //
-    // ---------------- DECLARATIONS OF DATA TYPES ----------------
-    //
+    parameter n = 32; // #bits for an operand
+    wire clk;
+    logic enable;
+    logic reset;
+    logic [n-1:0] d;
+    logic [n-1:0] q;
 
-    //inputs are reg for test bench - or use logic
-    logic D, CLK, ENABLE, RST;
-    
-    //outputs are wire for test bench - or use logic
-    wire Q;    
-    
-    //
-    // ---------------- INSTANTIATE UNIT UNDER TEST (DUT) ----------------
-    //
-    dff dut(.d(D), .clk(CLK), .rst(RST), .enable(ENABLE), .q(Q));
-    //
-    // ---------------- INITIALIZE TEST BENCH ----------------
-    //
-    initial begin : initialize_variables
-        {D, CLK, ENABLE} <= 0;
-        RST <= 1;
+   initial begin
+        $dumpfile("dff.vcd");
+        $dumpvars(0, uut0, uut1);
+        $monitor("time=%0t \t d=%h q=%h",$realtime, d, q);
     end
 
-    initial begin : dump_variables
-      $dumpfile("tb_dff.vcd"); // for Makefile, make dump file same as module name
-      $dumpvars(0, dut);
-    end
-
-    /*
-    * display variables
-    */
-    initial begin: display_variables
-        $monitor ($time, "ns\tClock=%b,\tReset=%b,\Enable=%b,\D=%b,\Q=%b", CLK, RST, ENABLE, D, Q);
-    end
-
-    //
-    // ---------------- APPLY INPUT VECTORS ----------------
-    //
-    // note: following the keyword begin is the name of the block: apply_stimulus
     initial begin
-        CLK = 0;
-        forever #5 CLK = ~CLK; // 10ns period
+        d <= #n'h8000;
+        enable <= 0;
+        #10 enable <= 1;
+        #10 reset <= 1;
+        #20 d <= #n'h0001;
+        #10 reset <= 0;
+        #10 reset <=0;
+        #20 d <= #n'h0001;
+        #100 enable <= 0;
+        $finish;        
     end
 
-    initial begin : apply_stimuli
-        #10 RST = 0;
-        D = 1;
-        ENABLE = 1;
-        #10; 
+    dff uut0(
+        .clk(clk), .rst(reset), .d(d), .q(q)
+    );
 
-        D = 0;
-        ENABLE = 1;
-        #10; 
-
-        ENABLE = 0; 
-        D = 1;
-        #10;
-
-        ENABLE = 1; 
-        #10;
-        $finish;
-    end
-
+   clock uut1(
+        .enable(enable),
+        .clk(clk)
+    );
 endmodule
-
-// `endif // tb_dff
+`endif // TB_DFF

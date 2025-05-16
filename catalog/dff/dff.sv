@@ -12,19 +12,20 @@
 `ifndef DFF
 `define DFF
 
-module dff(d, clk, rst, enable, q);
+module dff #(parameter n = 32) (clk, rst, d, q);
     //
     // ---------------- PORT DEFINITIONS ----------------
     //
-    input logic d, clk, rst, enable;
-    output logic q;
+    input logic clk, rst;
+    input logic [n-1:0] d;
+    output logic [n-1:0] q;
     //
     // ---------------- MODULE DESIGN IMPLEMENTATION ----------------
     //
-    always_ff @(posedge clk)begin
+    always_ff @(posedge clk, posedge rst)begin
         if (rst) 
             q <= 0;
-        else if (enable) 
+        else 
             q <= d;
     end
 
