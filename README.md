@@ -1,5 +1,6 @@
 # ece-251-final-project-spring-2025-just-put-the-fries-in-the-bag
-Implemented a 32-bit, single cycle CPU. The CPU reads instructions from an input file, computes and exectues them. The following are modules in the CPU <br/> 
+Implemented a 32-bit, single cycle CPU. <br/>
+The CPU reads instructions from an input file, computes and exectues them. The following are modules in the CPU <br/> 
 ## Adder <br/>
 Adds inputs and returns the output 
 ## ALU <br/>
