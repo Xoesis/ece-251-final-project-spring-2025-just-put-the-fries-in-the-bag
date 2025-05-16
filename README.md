@@ -1,4 +1,4 @@
-# ece-251-final-project-spring-2025-just-put-the-fries-in-the-bag
+# 32-Bit CPU 
 Implemented a 32-Bit Mips based, single cycle CPU <br/>
 The CPU reads instructions from an input file, computes and exectues them <br/>
 
