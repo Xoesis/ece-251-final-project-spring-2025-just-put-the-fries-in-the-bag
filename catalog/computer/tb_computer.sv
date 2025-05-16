@@ -1,13 +1,11 @@
 //////////////////////////////////////////////////////////////////////////////////
 // The Cooper Union
-// ECE 251 Spring 2023
-// Engineer: Prof Rob Marano
 // 
-//     Create Date: 2023-02-07
+// Berry Xu, code inspired by Prof. Marano 
+//
 //     Module Name: tb_computer
 //     Description: Test bench for a single-cycle MIPS computer
 //
-// Revision: 1.0
 //
 //////////////////////////////////////////////////////////////////////////////////
 `ifndef TB_COMPUTER
