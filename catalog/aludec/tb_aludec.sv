@@ -1,9 +1,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 // The Cooper Union
 // 
-// Berry Xu, code inspired by Prof. Marano 
+// Berry Xu
 //
-//     Module Name: tb_computer
+//     Module Name: tb_aludec
 //     Description: Test bench for a single-cycle MIPS computer
 //
 //
