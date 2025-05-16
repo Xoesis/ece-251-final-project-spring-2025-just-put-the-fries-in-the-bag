@@ -9,19 +9,25 @@ Decodes instructions to determine what ALU operation to perform
 ## Clock <br/>
 Changes from high to low every "picosecond" 
 ## Computer <br/>
+Connects the CPU, IMEM, DMEM together to execute instructions 
 ## Controller <br/>
+Manages and directs the flow of data between two entities
 ## CPU <br/>
+Computes and exectues instructions 
 ## Datapath <br/>
 Allows communication between the input and output of instructions 
 ## D Flip-Flop <br/>
-
+Stores data every edge triggered clock stage 
 ## DMEM <br/>
+Data Memory, reads and writes memory where data is stored and changed through the execution of instructions
 ## IMEM <br/>
+Instruction Memory, read-only memory containing the set of instructions to be executed
 ## Main Decoder <br/>
+Looks through the opcode to determine the instruction type (R, I, J)
 ## 2:1 MUX <br/>
 Chooses one signal from two inputs and transmits it to the output
 ## Register File <br/>
-
+Contains registers that stores data during computations 
 ## Sign Extender <br/>
 If the first bit is 0, then all 0's will be placed in front of the first bit unitl desired number of bits (in this case 32) <br/>
 If the first bit is 1, then all 1's will be placed in front of the first bit until desired number of bits (in this case 32) <br/>
