@@ -43,6 +43,11 @@ Places two 0's behind the last bit, effectively multiplying the value by 4
 4. Enter this command: make simulate COMPONENT=computer
 5. If you have QTspim, enter this command: make display COMPONENT=computer
 
+# CPU Diagram 
+Designed CPU based on "Computer Organization and Design MIPS edition 6th edition by David A. Patterson and John L. Hennessy
+![image](https://github.com/user-attachments/assets/57fa6306-8808-46ae-b08a-9d2d53a3b9cb)
+
+
 # Link to video: <br/>
 
 
