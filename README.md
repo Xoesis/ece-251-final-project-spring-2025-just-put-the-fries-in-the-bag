@@ -1,5 +1,5 @@
 # ece-251-final-project-spring-2025-just-put-the-fries-in-the-bag
-Implemented a single cycle CPU with the following modules: <br/> 
+Implemented a 32-bit, single cycle CPU with the following modules: <br/> 
 ## Adder <br/>
 Adds inputs and returns the output 
 ## ALU <br/>
